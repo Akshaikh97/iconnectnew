@@ -11,12 +11,17 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
+import { AddCompanyComponent } from './add-company/add-company.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     ServicerequestComponent,
-    SidenavComponent
+    SidenavComponent,
+    AddCompanyComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +31,8 @@ import { MatListModule } from '@angular/material/list';
     MatToolbarModule,
     MatIconModule,
     MatListModule,
-    MatSidenavModule
+    MatSidenavModule,
+    SharedModule
   ],
   providers: [
     provideClientHydration()

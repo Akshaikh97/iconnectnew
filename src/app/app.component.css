@@ -1,0 +1,5 @@
+.faded-out {
+    /* Add your styles to fade out the sidenav here */
+    opacity: 0.5;
+    /* Example: Reduce opacity when faded out */
+  }

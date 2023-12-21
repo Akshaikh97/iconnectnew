@@ -1,21 +1,41 @@
-<mat-toolbar color="primary">
-    <mat-toolbar-row>
-        <h4>Right Click</h4>
-        <button mat-button (click)="opened=!opened"><mat-icon>menu</mat-icon></button>
-        <button mat-button><mat-icon>home</mat-icon>Home</button>
-    </mat-toolbar-row>
-</mat-toolbar>
+<div class="preloader"></div>
+<nav class="navbar navbar-dark bg-primary">
+  <button class="navbar-toggler" type="button" (click)="toggleSidenav()">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <!-- Your logo goes here -->
+  <!-- <a class="navbar-brand" href="#"><img src="path-to-your-logo.png" alt="Your Logo" /></a> -->
+</nav>
 
-<mat-sidenav-container>
-    <mat-sidenav [(opened)]="opened" mode="side">
-      <mat-list>
-        <mat-list-item><a routerLink="/home" style="text-decoration: none;">Home</a></mat-list-item>
-        <mat-list-item><a routerLink="/about" style="text-decoration: none;">About</a></mat-list-item>
-        <mat-list-item><a routerLink="/service" style="text-decoration: none;">ServiceReq</a></mat-list-item>
-      </mat-list>
-    </mat-sidenav>
-  
-    <!-- <mat-sidenav-content>
+<div class="container-fluid">
+  <div class="row">
+    <nav [ngClass]="{'col-md-2': isSidenavOpen, 'd-none': !isSidenavOpen, 'd-md-block': isSidenavOpen, 'bg-light': isSidenavOpen, 'sidebar': isSidenavOpen}" class="col-md-2 bg-light sidebar">
+      <div class="sidebar-sticky">
+        <!-- Icon for your own logo -->
+        <!-- <div class="logo-icon"><img src="path-to-your-logo-icon.png" alt="Logo Icon" /></div> -->
+
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/addCompany" (click)="setActivePage('addCompany')">
+              <i class="fas fa-building"></i> AddCompany
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/dashboard" (click)="setActivePage('dashboard')">
+              <i class="fas fa-tachometer-alt"></i> Dashboard
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/serviceRequest" (click)="setActivePage('serviceRequest')">
+              <i class="fas fa-cogs"></i> ServiceReq
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
       <router-outlet></router-outlet>
-    </mat-sidenav-content> -->
-  </mat-sidenav-container>
+    </main>
+  </div>
+</div>

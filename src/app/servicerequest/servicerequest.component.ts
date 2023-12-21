@@ -6,5 +6,11 @@ import { Component } from '@angular/core';
   styleUrl: './servicerequest.component.css'
 })
 export class ServicerequestComponent {
-  opened = false;
+  selectedServiceType: any;
+  confirmTrack() {
+    throw new Error('Method not implemented.');
+  }
+  verifyCaptcha() {
+    throw new Error('Method not implemented.');
+  }
 }
