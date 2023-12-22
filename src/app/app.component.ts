@@ -15,7 +15,4 @@ export class AppComponent {
 
   ngOnInit(): void {
   }
-
-  handleWindowLoad(): void {
-  }
 }
