@@ -7,7 +7,7 @@ import { ServicerequestComponent } from './servicerequest/servicerequest.compone
 const routes: Routes = [
   { path: "addCompany", component: AddCompanyComponent },
   { path: "dashboard", component: DashboardComponent },
-  { path: "serviceRequest", component:  ServicerequestComponent}
+  { path: 'servicerequest', component: ServicerequestComponent }
 ];
 
 @NgModule({

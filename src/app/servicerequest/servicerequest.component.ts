@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   styleUrl: './servicerequest.component.css'
 })
 export class ServicerequestComponent {
-  selectedServiceType: any;
+    selectedServiceType: any;
   confirmTrack() {
     throw new Error('Method not implemented.');
   }

@@ -1,41 +1,33 @@
 <div class="preloader"></div>
-<nav class="navbar navbar-dark bg-primary">
-  <button class="navbar-toggler" type="button" (click)="toggleSidenav()">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <!-- Your logo goes here -->
-  <!-- <a class="navbar-brand" href="#"><img src="path-to-your-logo.png" alt="Your Logo" /></a> -->
-</nav>
-
-<div class="container-fluid">
-  <div class="row">
-    <nav [ngClass]="{'col-md-2': isSidenavOpen, 'd-none': !isSidenavOpen, 'd-md-block': isSidenavOpen, 'bg-light': isSidenavOpen, 'sidebar': isSidenavOpen}" class="col-md-2 bg-light sidebar">
-      <div class="sidebar-sticky">
-        <!-- Icon for your own logo -->
-        <!-- <div class="logo-icon"><img src="path-to-your-logo-icon.png" alt="Logo Icon" /></div> -->
-
-        <ul class="nav flex-column">
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/addCompany" (click)="setActivePage('addCompany')">
-              <i class="fas fa-building"></i> AddCompany
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/dashboard" (click)="setActivePage('dashboard')">
-              <i class="fas fa-tachometer-alt"></i> Dashboard
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/serviceRequest" (click)="setActivePage('serviceRequest')">
-              <i class="fas fa-cogs"></i> ServiceReq
-            </a>
-          </li>
-        </ul>
+<div id="wrapper" [ngClass]="{'toggled': isToggled}">
+  <a id="button"></a>
+  <aside id="sidebar-wrapper">
+    <div class="sidebar-top">
+      <img src="../assets/Image/headimg.jpg" class="logo" style="width: 40px;" alt="" />
+      <h5 style="color: white;">Bigshare Services</h5>
+    </div>
+    <ul class="sidebar-nav" id="div">
+      <li id="addClient" title="Add Company">
+        <a routerLink="/addCompany"><i class="fa fa-building"></i>Add Company</a>
+      </li>
+      <li id="dashboard" title="Dashboard">
+        <a routerLink="/dashboard"><i class="fa fa-dashboard"></i>Dashboard</a>
+      </li>
+      <!-- Add other sidebar items as needed -->
+    </ul>
+  </aside>
+  <div id="navbar-wrapper">
+    <nav class="navbar navbar-inverse">
+      <div class="container">
+        <div class="navbar-header">
+          <a href="#" class="navbar-brand" (click)="toggleSidebar($event)"><i class="fa fa-bars"></i></a>
+        </div>
+        <div class="navbar-header">
+          <div class="admin-user tooltip-element" data-tooltip="1">
+            <!-- User profile content here -->
+          </div>
+        </div>
       </div>
     </nav>
-
-    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-      <router-outlet></router-outlet>
-    </main>
   </div>
 </div>

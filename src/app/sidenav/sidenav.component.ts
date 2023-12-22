@@ -1,53 +1,30 @@
-import { Component, AfterViewInit, Renderer2, ElementRef } from '@angular/core';
-import { SidenavStateService } from '../shared/services/sidenav-state.service';
+import { Component, AfterViewInit, ViewChild } from '@angular/core';
+import { NgModel } from '@angular/forms';
 
 @Component({
   selector: 'app-sidenav',
   templateUrl: './sidenav.component.html',
-  styleUrl: './sidenav.component.css'
+  styleUrls: ['./sidenav.component.css']
 })
-export class SidenavComponent implements AfterViewInit{
-  isSidenavOpen = true;
-  constructor(private renderer: Renderer2,
-    private el: ElementRef,
-    private sidenavStateService: SidenavStateService
-  ) { }
+export class SidenavComponent implements AfterViewInit {
+  isToggled: boolean = false;
 
-  ngAfterViewInit(): void {
-    setTimeout(() => {
-      this.handleWindowLoad();
-    }, 100);
+  @ViewChild('ddlCompany') ddlCompany!: NgModel;
+  @ViewChild('ddServicerequest1') ddServicerequest1!: NgModel;
+
+  ngAfterViewInit() {
+    this.initializeSelect2();
   }
 
-  handleWindowLoad(): void {
-    const preloader = this.el.nativeElement.querySelector('.preloader') as HTMLElement;
+  toggleSidebar(event: Event) {
+    event.preventDefault(); 
+    this.isToggled = !this.isToggled;
+  }
 
-    if (preloader) {
-      // Hide preloader
-      this.renderer.setStyle(preloader, 'display', 'none');
-
-      // Additional setTimeout logic (if needed)
-      setTimeout(() => {
-        this.renderer.setStyle(preloader, 'display', 'none');
-      }, 1500);
-    } else {
-      console.error('Preloader element not found');
+  private initializeSelect2() {
+    if (this.ddlCompany) {
     }
-  }
-
-  toggleSidenav(): void {
-    this.isSidenavOpen = !this.isSidenavOpen;
-    this.setSidenavState();
-  }
-  
-  setSidenavState(): void {
-    this.sidenavStateService.activePage$.subscribe(activePage => {
-      const fadedOut = this.isSidenavOpen && activePage !== 'dashboard';
-      this.sidenavStateService.setSidenavFadedOut(fadedOut);
-    });
-  }
-  
-  setActivePage(page: string): void {
-    this.sidenavStateService.setActivePage(page);
+    if (this.ddServicerequest1) {
+    }
   }
 }
