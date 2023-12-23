@@ -1,0 +1,107 @@
+.reg-form {
+    background: #e9ecef;
+    /*background: #cfcde7;*/
+    /*background: #f2f3f8;*/
+}
+
+.container {
+    margin-top: 50px;
+}
+
+.login-logo {
+    font-size: 2.1rem;
+    font-weight: 300;
+    margin-bottom: 0.9rem;
+    text-align: center;
+}
+
+.login-text {
+    padding: 10px;
+    font-size: 14px;
+}
+
+.txtbox-padding {
+    padding-top: 10px;
+}
+
+.captcha {
+    display: flex;
+}
+
+#captchaValue {
+    height: 40px;
+    padding: 10px;
+    line-height: 20px;
+    background-color: #fff;
+    border-radius: 10px 0 0 10px;
+    color: #000;
+    font-weight: 700;
+    border-right: 2px solid gray;
+}
+
+.captcha input {
+    border-radius: 0 10px 10px 0 !important;
+}
+
+/* upload file*/
+.btn_upload {
+    cursor: pointer;
+    display: inline-block;
+    overflow: hidden;
+    position: relative;
+    color: #fff;
+    background-color: #2a72d4;
+    border: 1px solid #166b8a;
+    padding: 5px 10px;
+}
+
+.btn_upload:hover,
+.btn_upload:focus {
+    background-color: #7ca9e6;
+}
+
+.yes {
+    display: flex;
+    align-items: flex-start;
+    margin-top: 10px !important;
+}
+
+.btn_upload input {
+    cursor: pointer;
+    height: 100%;
+    position: absolute;
+    filter: alpha(opacity=1);
+    -moz-opacity: 0;
+    opacity: 0;
+}
+
+.it {
+    height: 100px;
+    margin-left: 10px;
+}
+
+.btn-rmv1,
+.btn-rmv2,
+.btn-rmv3,
+.btn-rmv4,
+.btn-rmv5 {
+    display: none;
+}
+
+.rmv {
+    cursor: pointer;
+    color: #fff;
+    border-radius: 30px;
+    border: 1px solid #fff;
+    display: inline-block;
+    background: rgba(255, 0, 0, 1);
+    margin: -5px -10px;
+}
+
+.rmv:hover {
+    background: rgba(255, 0, 0, 0.5);
+}
+
+img .preview1 .preview2 .preview3 {
+    width: 100%;
+}

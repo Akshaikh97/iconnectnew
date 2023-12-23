@@ -24,10 +24,32 @@
         </div>
         <div class="navbar-header">
           <div class="admin-user tooltip-element" data-tooltip="1">
-            <!-- User profile content here -->
+            <div class="admin-profile hide"><!-- need to figureout css "admin-profile hide" -->
+              <div>
+                <!-- <img class="embeddedObject" src="https://content.screencast.com/users/fg-a/folders/world-flags/media/72ef25eb-15be-46fd-b2d5-96196509b6de/indiaC.gif" width="68" height="50" border="0" alt="Clipart" /> -->
+              </div>
+              <!-- <img src="../Image/face-1.png" alt="" class="admin" /> -->
+              <div class="admin-info" id="investor-name">
+                <h3>
+                  <!-- <asp:Label ID="investorname" runat="server"></asp:Label> -->
+                </h3>
+                <h5>
+                  <!-- NEED TO PUT ROUTERLINK FOR  "manageProfile.aspx" -->
+                  <!-- <a href="../Investor/manageProfile.aspx">Manage Profile</a> -->
+                </h5>
+              </div>
+              <!-- NEED TO PUT ROUTERLINK FOR  "Login.aspx" -->
+              <a routerLink="/login" class="log-out" title="Logout">
+                <i class='fa fa-sign-out'></i>
+              </a>
+            </div>
           </div>
         </div>
       </div>
     </nav>
+  </div>
+  <div>
+
+    <ng-content></ng-content>
   </div>
 </div>

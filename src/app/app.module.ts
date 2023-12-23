@@ -14,6 +14,8 @@ import { MatListModule } from '@angular/material/list';
 import { AddCompanyComponent } from './add-company/add-company.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SharedModule } from './shared/shared.module';
+import { LoginComponent } from './login/login.component';
+import { RegistrationComponent } from './registration/registration.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { SharedModule } from './shared/shared.module';
     ServicerequestComponent,
     SidenavComponent,
     AddCompanyComponent,
-    DashboardComponent
+    DashboardComponent,
+    LoginComponent,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,51 @@
+html {
+    font-family: Calibri;
+}
+
+.reg-form {
+    /*background: #e9ecef;*/
+    /*background: #cfcde7;*/
+    background: #f2f3f8;
+}
+
+.container {
+    margin-top: 50px;
+}
+
+/*body {
+    font-size: 1.1rem;
+}*/
+/*.login-box {
+    width: 360px;
+}*/
+
+.login-logo {
+    font-size: 2.1rem;
+    font-weight: 300;
+    margin-bottom: 0.9rem;
+    text-align: center;
+}
+
+.login-text {
+    padding: 10px;
+    font-size: 14px;
+}
+
+.captcha {
+    display: flex;
+}
+
+#captchaValue {
+    height: 40px;
+    padding: 10px;
+    line-height: 20px;
+    background-color: #fff;
+    border-radius: 10px 0 0 10px;
+    color: #000;
+    font-weight: 700;
+    border-right: 2px solid gray;
+}
+
+.captcha input {
+    border-radius: 0 10px 10px 0 !important;
+}

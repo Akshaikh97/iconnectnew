@@ -1,0 +1,250 @@
+<body class="reg-form">
+    <div class="container">
+        <form method="post" id="loginForm" runat="server">
+            <div class="form-horizontal">
+                <div class="row">
+                    <div class="col-lg-7">
+                        <div class="login-logo">
+                            <div class="col-lg-12" id="registration_form">
+                                <img src="assets/reg.svg" alt="Registration" style="padding-top: 90px; width: 85%" />
+                            </div>
+                            <!-- <div class="col-lg-12" id="otpverification" visible="false">
+                                <img src="assets/otpverify.svg" alt="Registration"
+                                    style="padding-top: 90px; width: 85%" />
+                            </div>
+                            <div class="col-lg-12" id="uploaddocument" visible="false">
+                                <img src="assets/uploaddoc.svg" alt="Registration"
+                                    style="padding-top: 90px; width: 85%" />
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="login-box">
+                            <div class="login-logo">
+                                <div class="col-lg-12">
+                                    <a href="/registration">
+                                        <img src="assets/Image/big-share-logo.png" border="0"
+                                            alt="Bigshare Services" /></a>
+                                </div>
+                            </div>
+
+                            <div id="registration" class="card">
+                                <div class="card-body">
+                                    <h4>Create a new account</h4>
+
+                                    <div class="row" id="Registrationform">
+                                        <div class="form-group txtbox-padding">
+                                            <div class="col-md-12">
+                                                <!-- <asp:TextBox runat="server" ID="txtName" CssClass="form-control input-sm" placeholder="Name" AutoComplete="Off" required="" /> -->
+                                                <input type="text" ngModel name="txtName" class="form-control input-sm"
+                                                    placeholder="Name" autocomplete="off" required />
+                                            </div>
+                                        </div>
+                                        <div class="form-group txtbox-padding">
+                                            <div class="col-md-12">
+                                                <!-- <asp:TextBox runat="server" ID="txtEmail" CssClass="form-control input-sm" TextMode="Email" placeholder="Email" AutoComplete="Off" required /> -->
+                                                <input type="email" ngModel name="txtEmail"
+                                                    class="form-control input-sm" placeholder="Email" autocomplete="off"
+                                                    required />
+                                            </div>
+                                        </div>
+                                        <div class="form-group txtbox-padding">
+                                            <div class="col-md-12">
+                                                <!-- <asp:TextBox runat="server" ID="txtMobile" CssClass="form-control input-sm" placeholder="Mobile No." MaxLength="10" AutoComplete="Off" required /> -->
+                                                <input type="tel" ngModel name="txtMobile" class="form-control input-sm"
+                                                    placeholder="Mobile No." maxlength="10" autocomplete="off"
+                                                    required />
+                                            </div>
+                                        </div>
+                                        <div class="form-group txtbox-padding">
+                                            <div class="col-md-12">
+                                                <!-- <asp:TextBox runat="server" ID="txtPan" CssClass="form-control input-sm" placeholder="Pan" MaxLength="10" onkeyup="upper(this)" AutoComplete="Off" required />
+                                                <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ControlToValidate="txtPan"
+                                                    Display="Dynamic" ForeColor="Red" ErrorMessage="Invalid PAN No." ValidationExpression="[A-Z]{5}\d{4}[A-Z]{1}"></asp:RegularExpressionValidator> -->
+
+                                                <!-- <input type="text" ngModel name="txtPan" class="form-control input-sm"
+                                                    placeholder="Pan" maxlength="10" (keyup)="upper($event)"
+                                                    autocomplete="off" required /> -->
+                                                <input type="text" id="txtPan" class="form-control input-sm"
+                                                    placeholder="Pan" formControlName="txtPan"
+                                                    (keyup)="upper(txtPan.value)" />
+                                                <div
+                                                    *ngIf="panForm.get('txtPan').invalid && (panForm.get('txtPan').dirty || panForm.get('txtPan').touched)">
+                                                    <div *ngIf="panForm.get('txtPan').hasError('required')">Pan is
+                                                        required.</div>
+                                                    <div *ngIf="panForm.get('txtPan').hasError('pattern')">Invalid PAN
+                                                        No.</div>
+                                                    <div *ngIf="panForm.get('txtPan').hasError('maxlength')">Maximum
+                                                        length is 10 characters.</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group txtbox-padding">
+                                            <div class="col-md-12">
+                                                <!-- <asp:TextBox runat="server" TextMode="Password" ID="txtPassword" CssClass="form-control input-sm" placeholder="Password" required /> -->
+                                                <input type="password" ngModel name="txtPassword"
+                                                    class="form-control input-sm" placeholder="Password" required />
+                                            </div>
+                                        </div>
+                                        <div class="form-group txtbox-padding">
+                                            <div class="col-md-12">
+                                                <!-- <asp:TextBox runat="server" TextMode="Password" ID="txtCnfPassword" CssClass="form-control input-sm" placeholder="Confirm Password" required />
+                                                <asp:CompareValidator runat="server" ControlToCompare="txtPassword" ControlToValidate="txtCnfPassword"
+                                                    ErrorMessage="Passwords do not match." ForeColor="Red" ValidationGroup="gvSubmit">
+                                                </asp:CompareValidator> -->
+                                                <input type="password" ngModel name="txtCnfPassword"
+                                                    class="form-control input-sm" placeholder="Confirm Password"
+                                                    required />
+                                            </div>
+                                        </div>
+                                        <div class="form-group txtbox-padding">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="mb-3 d-flex align-items-center">
+                                                        <canvas id="captcha" width="150" height="40"
+                                                            style="border: 1px solid; border-radius: 5px;"></canvas>
+                                                        <button type="button" class="btn btn-secondary"
+                                                            id="refresh-captcha" style="margin-left: 15px;">
+                                                            <i class="fa fa-refresh"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <!-- <div class="mb-3">
+                                                        <input type="text" class="form-control" id="captcha-input"
+                                                            placeholder="Enter Captcha" required />
+                                                    </div> -->
+                                                    <input type="text" ngModel name="captchaInput" class="form-control"
+                                                        placeholder="Enter Captcha" required />
+                                                </div>
+                                                <!-- <asp:Label runat="server" ID="Error" ForeColor="Red" /> -->
+                                            </div>
+                                        </div>
+                                        <div class="form-group txtbox-padding">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <!-- <asp:Button runat="server" OnClientClick="return verifyCaptcha()" ID="btnRegistered" ValidationGroup="gvSubmit" Text="Register" CssClass="btn btn-primary btn-sm" OnClick="btnRegistered_Click" /> -->
+                                                    <button type="button" class="btn btn-secondary"
+                                                        (click)="refreshCaptcha()">
+                                                        <i class="fa fa-refresh"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    If you have already registered <a routerLink="/login">Login</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="otpvalidation" class="card" runat="server" visible="false">
+                                <div class="card-body">
+                                    <h4>OTP VERIFICATION</h4>
+                                    <div>
+                                        <h6> OTP has been send to your mobile number and E-Mail Id</h6>
+                                    </div>
+                                    <div class="row" id="Div1" runat="server">
+                                        <div class="form-group txtbox-padding">
+                                            <div class="col-md-12">
+                                                <!-- <asp:TextBox runat="server" ID="txtMobileotp" CssClass="form-control" placeholder="Enter Mobile/E-Mail OTP" MaxLength="10" AutoComplete="Off" required /> -->
+                                                <input type="text" id="txtMobileotp" class="form-control"
+                                                    placeholder="Enter Mobile/E-Mail OTP" maxlength="10"
+                                                    autocomplete="off" [(ngModel)]="mobileOtp" required />
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group txtbox-padding">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <!-- <asp:Button runat="server" ID="btnValidateotp" ValidationGroup="gvSubmit" Text="VALIDATE OTP" CssClass="btn btn-primary btn-sm" OnClick="btnValidateotp_Click" /> -->
+                                                    <button type="button" class="btn btn-primary btn-sm"
+                                                        (click)="validateOtp()">VALIDATE OTP</button>
+                                                </div>
+                                            </div>
+                                            <label>{{ labelContent }}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <asp:HiddenField ID="hdnmsgid" runat="server" /> -->
+                            <div id="uploadDoc" class="card" runat="server" visible="false">
+                                <div class="card-body">
+                                    <h4>UPLOAD DOCUMENTS</h4>
+                                    <div class="row" id="Div2" runat="server">
+                                        <div class="form-group txtbox-padding">
+                                            <div class="col-md-12">
+                                                <div class="yes">
+                                                    <div class="col-lg-5">
+                                                        <span class="btn_upload btn btn-primary-sm btn-block"
+                                                            style="width: 100%;">
+                                                            <input type="file" id="imagpan" title="" class="input-img"
+                                                                runat="server" />
+                                                            Upload Pan
+                                                        </span>
+                                                    </div>
+                                                    <div class="col-lg-7">
+                                                        <img id="ImgPreview" src="" class="preview1 responsive" />
+                                                        <input type="button" id="removeImage1" value="x"
+                                                            class="btn-rmv1" />
+                                                    </div>
+                                                </div>
+                                                <hr />
+                                                <div class="yes">
+                                                    <div class="col-lg-5">
+                                                        <span class="btn_upload btn btn-primary-sm btn-block"
+                                                            style="width: 100%;">
+                                                            <input type="file" id="imagphoto" title="" class="input-img"
+                                                                runat="server" />
+                                                            Upload Photo
+                                                        </span>
+                                                        <!-- <%--<asp:Label runat="server" ID="lblphoto" Text="Photo upload is mandatory" Visible="false" />--%> -->
+                                                    </div>
+                                                    <div class="col-lg-7">
+                                                        <img id="ImgPreview2" src="" class="preview2 responsive" />
+                                                        <input type="button" id="removeImage2" value="x"
+                                                            class="btn-rmv2" />
+                                                    </div>
+                                                </div>
+                                                <hr />
+                                                <div class="yes">
+                                                    <div class="col-lg-5">
+                                                        <span class="btn_upload btn btn-primary-sm btn-block"
+                                                            style="width: 100%;">
+                                                            <input type="file" id="imagsign" title="" class="input-img"
+                                                                runat="server" />
+                                                            Upload Signature
+                                                        </span>
+                                                        <!-- <%--<asp:Label runat="server" ID="lblsign" Text="Signature upload is mandatory" Visible="false" />--%> -->
+                                                    </div>
+                                                    <div class="col-lg-7">
+                                                        <img id="ImgPreview3" src="" class="preview3 responsive" />
+                                                        <input type="button" id="removeImage3" value="x"
+                                                            class="btn-rmv3" />
+                                                    </div>
+                                                </div>
+                                                <hr />
+                                            </div>
+                                        </div>
+                                        <div class="form-group txtbox-padding">
+                                            <div class="row">
+                                                <div class="col-md-9">
+                                                    <!-- <asp:Label runat="server" ID="lblError" Text="" ForeColor="red" /> -->
+                                                    <label [style.color]="errorTextColor">{{ errorMessage }}</label>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <!-- <asp:Button runat="server" ID="btnDocUpload" OnClientClick="return verifyimage()" Text="UPLOAD" CssClass="btn btn-primary btn-sm" OnClick="btnDocUpload_Click" /> -->
+                                                    <button type="button" class="btn btn-primary btn-sm"
+                                                        (click)="verifyImage() ? uploadDocument() : false">UPLOAD</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
