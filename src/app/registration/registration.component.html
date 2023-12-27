@@ -52,13 +52,15 @@
                                         </div>
                                         <div class="form-group txtbox-padding">
                                             <div class="col-md-12">
-                                                <input type="text" formControlName="pan" placeholder="PAN Number" maxlength="10" />
-                                                <div *ngIf="registrationForm.get('pan')!.errors">
-                                                    <div *ngIf="registrationForm.get('pan')!.hasError('required')">PAN is required</div>
-                                                    <div *ngIf="registrationForm.get('pan')!.hasError('pattern')">Invalid PAN format</div>
+                                                <input type="text" class="form-control input-sm" 
+                                                       placeholder="PAN Number" maxlength="10" 
+                                                       formControlName="pan" />
+                                                <div *ngIf="registrationForm.get('pan')?.invalid && registrationForm.get('pan')?.touched">
+                                                    <div *ngIf="registrationForm.get('pan')?.hasError('required')">PAN is required</div>
+                                                    <div *ngIf="registrationForm.get('pan')?.hasError('pattern')">Invalid PAN format</div>
                                                 </div>
                                             </div>
-                                        </div>                                        
+                                        </div>
                                         <div class="form-group txtbox-padding">
                                             <div class="col-md-12">
                                                 <input type="password" class="form-control input-sm"
