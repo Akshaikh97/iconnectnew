@@ -4,7 +4,7 @@ import { BrowserModule, provideClientHydration } from '@angular/platform-browser
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
+import { FormsModule , ReactiveFormsModule } from '@angular/forms';
 import { ServicerequestComponent } from './servicerequest/servicerequest.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -36,10 +36,8 @@ import { RegistrationComponent } from './registration/registration.component';
     MatIconModule,
     MatListModule,
     MatSidenavModule,
-    SharedModule
-  ],
-  providers: [
-    provideClientHydration()
+    SharedModule,
+    ReactiveFormsModule
   ],
   bootstrap: [AppComponent]
 })

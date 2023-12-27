@@ -23,14 +23,14 @@
                                 <h4>Log in to start your session</h4>
                                 <p></p>
                                 <p></p>
-                                <form method="post" id="loginForm" runat="server">
+                                <form (ngSubmit)="login()">
                                     <div class="input-group mb-3">
-                                        <input type="text" name="txtUserName" class="form-control" id="txtUserName"
-                                            placeholder="Username" runat="server" required />
+                                        <input type="text" class="form-control" id="txtUserName" placeholder="Username"
+                                            required [(ngModel)]="username" name="username" />
                                     </div>
                                     <div class="input-group mb-3">
-                                        <input type="password" name="txtPassword" class="form-control" id="txtPassword"
-                                            placeholder="Password" runat="server" required />
+                                        <input type="password" class="form-control" id="txtPassword"
+                                            placeholder="Password" required [(ngModel)]="password" name="password" />
                                     </div>
                                     <div class="form-group txtbox-padding">
                                         <div class="row">
@@ -76,6 +76,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <button type="submit" class="btn btn-primary">Login</button>
                                 </form>
                             </div>
                         </div>
