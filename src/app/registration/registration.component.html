@@ -5,7 +5,7 @@
                 <div class="row">
                     <div class="col-lg-7">
                         <div class="login-logo">
-                            <div class="col-lg-12">
+                            <div class="col-lg-12" id="registration_form">
                                 <img src="assets/reg.svg" alt="Registration" style="padding-top: 90px; width: 85%" />
                             </div>
                         </div>
@@ -14,7 +14,7 @@
                     <div class="col-lg-5">
                         <div class="login-box">
                             <div class="login-logo">
-                                <div class="col-lg-12">
+                                <div class="col-lg-12" id="registration_form">
                                     <a href="/registration">
                                         <img src="assets/Image/big-share-logo.png" border="0"
                                             alt="Bigshare Services" /></a>
@@ -52,26 +52,32 @@
                                         </div>
                                         <div class="form-group txtbox-padding">
                                             <div class="col-md-12">
-                                                <input type="text" class="form-control input-sm"
-                                                placeholder="Mobile No." maxlength="10" 
-                                                formControlName="mobile" 
-                                                autocomplete="off" required />
-                                                <div *ngIf="registrationForm.get('mobile')?.touched">
-                                                    <div *ngIf="registrationForm.get('mobile')?.hasError('required')">Mobile number is required</div>
-                                                </div>
+                                              <input type="text" class="form-control input-sm"
+                                                     placeholder="Mobile No." maxlength="10" 
+                                                     formControlName="mobile" 
+                                                     autocomplete="off" required />
+                                              <div *ngIf="registrationForm.get('mobile')?.touched">
+                                                <div *ngIf="registrationForm.get('mobile')?.hasError('required')">Mobile number is required</div>
+                                                <div *ngIf="registrationForm.get('mobile')?.hasError('onlyNumbers')">Please enter only numbers</div>
+                                              </div>
                                             </div>
-                                        </div>
-                                        <div class="form-group txtbox-padding">
+                                          </div>                                          
+                                          <div class="form-group txtbox-padding">
                                             <div class="col-md-12">
-                                                <input type="text" class="form-control input-sm" 
-                                                       placeholder="PAN Number" maxlength="10" 
-                                                       formControlName="pan" />
-                                                <div *ngIf="registrationForm.get('pan')?.invalid && registrationForm.get('pan')?.touched">
-                                                    <div *ngIf="registrationForm.get('pan')?.hasError('required')">PAN is required</div>
-                                                    <div *ngIf="registrationForm.get('pan')?.hasError('pattern')">Invalid PAN format</div>
-                                                </div>
+                                              <input
+                                                type="text"
+                                                class="form-control input-sm"
+                                                placeholder="PAN Number"
+                                                maxlength="10"
+                                                formControlName="pan"
+                                                (input)="onPanInputChange($event)"
+                                              />
+                                              <div *ngIf="registrationForm.get('pan')?.invalid && registrationForm.get('pan')?.touched">
+                                                <div *ngIf="registrationForm.get('pan')?.hasError('required')">PAN is required</div>
+                                                <div *ngIf="registrationForm.get('pan')?.hasError('pattern')">Invalid PAN format</div>
+                                              </div>
                                             </div>
-                                        </div>
+                                          </div>
                                         <div class="form-group txtbox-padding">
                                             <div class="col-md-12">
                                                 <input type="password" class="form-control input-sm"
@@ -126,6 +132,7 @@
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>

@@ -1,5 +1,5 @@
 import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl , ValidatorFn, AbstractControl} from '@angular/forms';
 import { RegistrationInterface } from './models/registration.model';
 
 @Component({
@@ -27,7 +27,7 @@ export class RegistrationComponent implements AfterViewInit {
     this.registrationForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      mobile: ['', [Validators.required, Validators.maxLength(10)]],
+      mobile: ['', [Validators.required, Validators.maxLength(10), this.onlyNumbers()]],
       pan: ['', [Validators.required, Validators.pattern(/[A-Z]{5}\d{4}[A-Z]{1}/)]],
       password: ['', Validators.required],
       confirmPassword: ['', Validators.required],
@@ -44,6 +44,11 @@ export class RegistrationComponent implements AfterViewInit {
     return this.registrationForm.get('captcha') as FormControl;
   }
 
+  onPanInputChange(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    inputElement.value = inputElement.value.toUpperCase();
+  }
+  
   generateCaptcha(): void {
     this.registrationData.captcha = this.generateRandomString(6);
   }
@@ -95,5 +100,19 @@ export class RegistrationComponent implements AfterViewInit {
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillText(this.registrationData.captcha, canvas.width / 2, canvas.height / 2);
+  }
+
+  onlyNumbers(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const value = control.value;
+  
+      if (!value) {
+        return null; // If no value is entered, validation passes
+      }
+  
+      const valid = /^\d+$/.test(value); // Check if the value contains only numbers
+  
+      return valid ? null : { 'onlyNumbers': true };
+    };
   }
 }
