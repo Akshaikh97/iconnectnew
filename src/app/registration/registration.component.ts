@@ -1,25 +1,29 @@
-import { Component, AfterViewInit, Renderer2, ViewChild, ElementRef } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { RegistrationInterface } from './models/registration.model';
 
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css']
 })
+
 export class RegistrationComponent implements AfterViewInit {
-  name: string = '';
-  email: string = '';
-  mobile: string = '';
-  pan: string = '';
-  password: string = '';
-  confirmPassword: string = '';
-  captcha: string = '';
-  userEnteredCaptcha: string = '';
+  registrationData: RegistrationInterface = {
+    name: '',
+    email: '',
+    mobile: '',
+    pan: '',
+    password: '',
+    confirmPassword: '',
+    captcha: ''
+  };
+
   registrationForm: FormGroup;
 
   @ViewChild('captchaCanvas', { static: false }) captchaCanvas!: ElementRef<HTMLCanvasElement>;
 
-  constructor(private fb: FormBuilder, private renderer: Renderer2) {
+  constructor(private fb: FormBuilder) {
     this.registrationForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -41,7 +45,7 @@ export class RegistrationComponent implements AfterViewInit {
   }
 
   generateCaptcha(): void {
-    this.captcha = this.generateRandomString(6);
+    this.registrationData.captcha = this.generateRandomString(6);
   }
 
   generateRandomString(length: number): string {
@@ -56,16 +60,11 @@ export class RegistrationComponent implements AfterViewInit {
 
   refreshCaptcha(): void {
     this.generateCaptcha();
-    this.userEnteredCaptcha = '';
     this.drawCaptcha();
   }
 
-  upper(value: string): void {
-    // Your implementation here
-  }
-
   register(): void {
-    if (this.userEnteredCaptcha.toUpperCase() === this.captcha.toUpperCase()) {
+    if (this.registrationData.captcha.toUpperCase() === this.registrationForm.get('captcha')?.value.toUpperCase()) {
       console.log('Captcha matched. Proceed with registration.');
     } else {
       console.log('Invalid captcha. Registration failed.');
@@ -73,21 +72,28 @@ export class RegistrationComponent implements AfterViewInit {
   }
 
   drawCaptcha(): void {
-    const canvas = this.captchaCanvas.nativeElement;
+    const canvas = this.captchaCanvas?.nativeElement;
+    
+    if (!canvas) {
+      console.error('Canvas not found');
+      return;
+    }
+
     const ctx = canvas.getContext('2d');
 
-    console.log(canvas); // Check if the canvas is found
-    console.log(ctx);    // Check if the context is available
-    
-    if (ctx) {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.font = '20px Arial';
-      ctx.fillStyle = 'black';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText(this.captcha, canvas.width / 2, canvas.height / 2);
-    } else {
+    if (!ctx) {
       console.error('Canvas context not available');
+      return;
     }
+
+    // Clear the canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Draw the new captcha
+    ctx.font = '20px Arial';
+    ctx.fillStyle = 'black';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(this.registrationData.captcha, canvas.width / 2, canvas.height / 2);
   }
 }

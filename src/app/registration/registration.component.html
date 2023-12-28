@@ -31,8 +31,7 @@
                                                 <input type="text" 
                                                 class="form-control input-sm" 
                                                 placeholder="Name" 
-                                                formControlName="name"   
-                                                [(ngModel)]="name" 
+                                                formControlName="name"
                                                 autocomplete="off" required />
                                                 <div *ngIf="registrationForm.get('name')?.touched">
                                                     <div *ngIf="registrationForm.get('name')?.hasError('required')">Name is required</div>
@@ -45,7 +44,6 @@
                                                 class="form-control input-sm" 
                                                 placeholder="Email"
                                                 formControlName="email"
-                                                [(ngModel)]="email" 
                                                 autocomplete="off" required />
                                                 <div *ngIf="registrationForm.get('email')?.touched">
                                                     <div *ngIf="registrationForm.get('email')?.hasError('required')">Email is required</div>
@@ -57,7 +55,6 @@
                                                 <input type="text" class="form-control input-sm"
                                                 placeholder="Mobile No." maxlength="10" 
                                                 formControlName="mobile" 
-                                                [(ngModel)]="mobile"
                                                 autocomplete="off" required />
                                                 <div *ngIf="registrationForm.get('mobile')?.touched">
                                                     <div *ngIf="registrationForm.get('mobile')?.hasError('required')">Mobile number is required</div>
@@ -79,8 +76,8 @@
                                             <div class="col-md-12">
                                                 <input type="password" class="form-control input-sm"
                                                 placeholder="Password" 
-                                                formControlName="password"
-                                                [(ngModel)]="password" required />
+                                                formControlName="password" 
+                                                required />
                                                 <div *ngIf="registrationForm.get('password')?.touched">
                                                     <div *ngIf="registrationForm.get('password')?.hasError('required')">Password is required</div>
                                                 </div>
@@ -106,9 +103,8 @@
                                               </div>
                                               <div class="col-md-6">
                                                 <div class="mb-3">
-                                                  <!-- Input field for the user to enter the captcha -->
                                                   <input type="text" class="form-control" placeholder="Enter Captcha" [formControl]="captchaControl" required />
-                                                  <div *ngIf="captchaControl.invalid && (captchaControl.dirty || captchaControl.touched)" style="color: red;">Invalid Captcha.</div>
+                                                  <div *ngIf="registrationForm.get('captcha')?.invalid && (registrationForm.get('captcha')?.dirty || registrationForm.get('captcha')?.touched)" style="color: red;">Invalid Captcha.</div>
                                                 </div>
                                               </div>
                                             </div>
