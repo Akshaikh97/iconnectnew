@@ -46,11 +46,6 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
     return this.registrationForm.get('captcha') as FormControl;
   }
 
-  onPanInputChange(event: Event): void {
-    const inputElement = event.target as HTMLInputElement;
-    inputElement.value = inputElement.value.toUpperCase();
-  }
-  
   generateCaptcha(): void {
     this.registrationData.captcha = this.generateRandomString(6);
   }
