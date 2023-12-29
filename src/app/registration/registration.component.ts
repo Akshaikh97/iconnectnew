@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl , ValidatorFn, AbstractControl} from '@angular/forms';
 import { RegistrationInterface } from './models/registration.model';
 
@@ -8,7 +8,7 @@ import { RegistrationInterface } from './models/registration.model';
   styleUrls: ['./registration.component.css']
 })
 
-export class RegistrationComponent implements AfterViewInit {
+export class RegistrationComponent implements OnInit, AfterViewInit {
   registrationData: RegistrationInterface = {
     name: '',
     email: '',
@@ -19,11 +19,13 @@ export class RegistrationComponent implements AfterViewInit {
     captcha: ''
   };
 
-  registrationForm: FormGroup;
+  registrationForm!: FormGroup;
 
   @ViewChild('captchaCanvas', { static: false }) captchaCanvas!: ElementRef<HTMLCanvasElement>;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder) {}
+
+  ngOnInit(): void {
     this.registrationForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -32,10 +34,10 @@ export class RegistrationComponent implements AfterViewInit {
       password: ['', Validators.required],
       confirmPassword: ['', Validators.required],
       captcha: ['', Validators.required],
-    });
+    }, { validators: this.passwordMismatchValidator });
     this.generateCaptcha();
   }
-
+  
   ngAfterViewInit(): void {
     this.drawCaptcha();
   }
@@ -114,5 +116,12 @@ export class RegistrationComponent implements AfterViewInit {
   
       return valid ? null : { 'onlyNumbers': true };
     };
+  }
+
+  passwordMismatchValidator(control: AbstractControl): { [key: string]: boolean } | null {
+    const password = control.get('password')?.value;
+    const confirmPassword = control.get('confirmPassword')?.value;
+
+    return password === confirmPassword ? null : { 'passwordMismatch': true };
   }
 }
