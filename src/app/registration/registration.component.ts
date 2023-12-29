@@ -112,12 +112,14 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
       return valid ? null : { 'onlyNumbers': true };
     };
   }
+
   onPanBlur(): void {
     const panControl = this.registrationForm.get('pan');
     if (panControl) {
       panControl.setValue(panControl.value.toUpperCase());
     }
   }
+  
   passwordMismatchValidator(control: AbstractControl): { [key: string]: boolean } | null {
     const password = control.get('password')?.value;
     const confirmPassword = control.get('confirmPassword')?.value;
