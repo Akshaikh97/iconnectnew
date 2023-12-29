@@ -96,6 +96,7 @@
                                                     class="form-control input-sm"
                                                     placeholder="Confirm Password"
                                                     formControlName="confirmPassword"
+                                                    required
                                                 />
                                                 <div *ngIf="registrationForm.get('confirmPassword')?.touched" style="color: red;">
                                                     <div *ngIf="registrationForm.hasError('passwordMismatch')">Passwords do not match.</div>
