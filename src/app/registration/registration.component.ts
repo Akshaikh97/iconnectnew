@@ -31,8 +31,8 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
       email: ['', [Validators.required, Validators.email]],
       mobile: ['', [Validators.required, Validators.maxLength(10), this.onlyNumbers()]],
       pan: ['', [Validators.required, Validators.pattern(/[A-Z]{5}\d{4}[A-Z]{1}/)]],
-      password: ['', Validators.required],
-      confirmPassword: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(15)]],
+      confirmPassword: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(15)]],
       captcha: ['', Validators.required],
     }, { validators: this.passwordMismatchValidator });
     this.generateCaptcha();
@@ -117,7 +117,12 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
       return valid ? null : { 'onlyNumbers': true };
     };
   }
-
+  onPanBlur(): void {
+    const panControl = this.registrationForm.get('pan');
+    if (panControl) {
+      panControl.setValue(panControl.value.toUpperCase());
+    }
+  }
   passwordMismatchValidator(control: AbstractControl): { [key: string]: boolean } | null {
     const password = control.get('password')?.value;
     const confirmPassword = control.get('confirmPassword')?.value;

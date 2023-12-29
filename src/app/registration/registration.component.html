@@ -33,7 +33,7 @@
                                                 placeholder="Name" 
                                                 formControlName="name"
                                                 autocomplete="off" required />
-                                                <div *ngIf="registrationForm.get('name')?.touched">
+                                                <div *ngIf="registrationForm.get('name')?.touched" style="color: red;">
                                                     <div *ngIf="registrationForm.get('name')?.hasError('required')">Name is required</div>
                                                 </div>
                                             </div>
@@ -45,7 +45,7 @@
                                                 placeholder="Email"
                                                 formControlName="email"
                                                 autocomplete="off" required />
-                                                <div *ngIf="registrationForm.get('email')?.touched">
+                                                <div *ngIf="registrationForm.get('email')?.touched" style="color: red;">
                                                     <div *ngIf="registrationForm.get('email')?.hasError('required')">Email is required</div>
                                                 </div>
                                             </div>
@@ -56,7 +56,7 @@
                                                      placeholder="Mobile No." maxlength="10" 
                                                      formControlName="mobile" 
                                                      autocomplete="off" required />
-                                              <div *ngIf="registrationForm.get('mobile')?.touched">
+                                              <div *ngIf="registrationForm.get('mobile')?.touched" style="color: red;">
                                                 <div *ngIf="registrationForm.get('mobile')?.hasError('required')">Mobile number is required</div>
                                                 <div *ngIf="registrationForm.get('mobile')?.hasError('onlyNumbers')">Please enter only numbers</div>
                                               </div>
@@ -70,9 +70,9 @@
                                                 placeholder="PAN Number"
                                                 maxlength="10"
                                                 formControlName="pan"
-                                                (input)="onPanInputChange($event)"
+                                                (blur)="onPanBlur()"
                                               />
-                                              <div *ngIf="registrationForm.get('pan')?.invalid && registrationForm.get('pan')?.touched">
+                                              <div *ngIf="registrationForm.get('pan')?.invalid && registrationForm.get('pan')?.touched" style="color: red;">
                                                 <div *ngIf="registrationForm.get('pan')?.hasError('required')">PAN is required</div>
                                                 <div *ngIf="registrationForm.get('pan')?.hasError('pattern')">Invalid PAN format</div>
                                               </div>
@@ -84,8 +84,10 @@
                                                 placeholder="Password" 
                                                 formControlName="password" 
                                                 required />
-                                                <div *ngIf="registrationForm.get('password')?.touched">
+                                                <div *ngIf="registrationForm.get('password')?.touched" style="color: red;">
                                                     <div *ngIf="registrationForm.get('password')?.hasError('required')">Password is required</div>
+                                                    <div *ngIf="registrationForm.get('password')?.hasError('minlength')">Password must be at least 8 characters</div>
+                                                    <div *ngIf="registrationForm.get('password')?.hasError('maxlength')">Password must be at most 15 characters</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -99,7 +101,10 @@
                                                     required
                                                 />
                                                 <div *ngIf="registrationForm.get('confirmPassword')?.touched" style="color: red;">
+                                                    <div *ngIf="registrationForm.get('confirmPassword')?.hasError('required')">Confirm Password is required</div>
                                                     <div *ngIf="registrationForm.hasError('passwordMismatch')">Passwords do not match.</div>
+                                                    <div *ngIf="registrationForm.get('confirmPassword')?.hasError('minlength')">Confirm Password must be at least 8 characters</div>
+                                                    <div *ngIf="registrationForm.get('confirmPassword')?.hasError('maxlength')">Confirm Password must be at most 15 characters</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -120,7 +125,7 @@
                                                 </div>
                                               </div>
                                             </div>
-                                          </div>
+                                        </div>
                                         <div class="form-group txtbox-padding">
                                             <div class="row">
                                                 <div class="col-md-3">
@@ -139,6 +144,39 @@
                                 </div>
                             </div>
 
+                            <!-- <div id="otpvalidation" class="card" *ngIf="showOtpValidation">
+                                <div class="card-body">
+                                    <h4>OTP VERIFICATION</h4>
+                                    <div>
+                                        <h6>OTP has been sent to your mobile number and E-Mail Id</h6>
+                                    </div>
+                                    <form [formGroup]="otpForm" (ngSubmit)="validateOtp()">
+                                        <div class="row" id="Div1">
+                                            <div class="form-group txtbox-padding">
+                                                <div class="col-md-12">
+                                                  <input type="text" 
+                                                  class="form-control" 
+                                                  placeholder="Enter Mobile/E-Mail OTP" 
+                                                  formControlName="mobileOtp" 
+                                                  maxlength="10" 
+                                                  autocomplete="off" required />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group txtbox-padding">
+                                            <div class="row">
+                                              <div class="col-md-3">
+                                                <button type="submit" 
+                                                class="btn btn-primary btn-sm" 
+                                                [disabled]="otpForm.invalid">VALIDATE OTP</button>
+                                              </div>
+                                            </div>
+                                            <div *ngIf="otpForm.get('mobileOtp')?.invalid && otpForm.get('mobileOtp')?.touched" style="color: red;">Invalid OTP</div>
+                                        </div>
+                                    </form>
+                                    <div *ngIf="otpValidationMessage">{{ otpValidationMessage }}</div>
+                                </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
