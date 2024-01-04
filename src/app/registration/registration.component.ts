@@ -2,7 +2,6 @@ import { Component, AfterViewInit, ViewChild, ElementRef, OnInit } from '@angula
 import { FormBuilder, FormGroup, Validators, FormControl, ValidatorFn, AbstractControl } from '@angular/forms';
 import { RegistrationInterface } from './models/registration.model';
 import { LoginInterface } from './models/login.model';
-import { ApiResponseInterface, ApiErrorInterface } from '@app/registration/models/api.model';
 
 @Component({
   selector: 'app-registration',
@@ -25,6 +24,7 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
 
   @ViewChild('captchaCanvas', { static: false }) captchaCanvas!: ElementRef<HTMLCanvasElement>;
   apiService: any;
+  users: any;
 
   constructor(private fb: FormBuilder) { }
 
@@ -67,10 +67,25 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
     this.generateCaptcha();
     this.drawCaptcha();
   }
+  
+  private isValidResponse(response: unknown): boolean {
+    // Check if the response is not null or undefined
+    if (response === null || response === undefined) {
+      console.error('Invalid response: Response is null or undefined.');
+      return false;
+    }
+  
+    const responseIsValid: boolean = (response as any).status === 'success';
+    if (responseIsValid) {
+      return true;
+    } else {
+      console.error('Invalid response: Custom validation condition not met.');
+      return false;
+    }
+  }
+  
   register(): void {
     if (this.registrationData.captcha.toUpperCase() === this.registrationForm.get('captcha')?.value.toUpperCase()) {
-      // Proceed with registration
-      // Prepare the data to be sent to the API
       const user: LoginInterface = {
         name: this.registrationData.name,
         email: this.registrationData.email,
@@ -78,21 +93,28 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
         pan: this.registrationData.pan,
         password: this.registrationData.password
       };
-
-      // Call the API service to register the user
-      this.apiService.register(user).subscribe(
-        (response: ApiResponseInterface) => {
-          console.log('User registered successfully:', response);
+  
+      this.apiService.registerAndGenerateOtp(user).subscribe(
+        (response: unknown) => {
+          if (this.isValidResponse(response)) {
+            console.log('User registered successfully:', response);
+            // Assign the response to 'users' if needed
+            this.users = response;
+          } else {
+            console.error('Invalid response:', response);
+          }
         },
-        (error: ApiErrorInterface) => {
+        (error: unknown) => {
           console.error('Registration failed:', error);
+        },
+        () => {
+          console.log('Request has completed');
         }
       );
     } else {
       console.log('Invalid captcha. Registration failed.');
     }
   }
-
 
   drawCaptcha(): void {
     const canvas = this.captchaCanvas?.nativeElement;
