@@ -1,6 +1,8 @@
 import { Component, AfterViewInit, ViewChild, ElementRef, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl , ValidatorFn, AbstractControl} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl, ValidatorFn, AbstractControl } from '@angular/forms';
 import { RegistrationInterface } from './models/registration.model';
+import { LoginInterface } from './models/login.model';
+import { ApiResponseInterface, ApiErrorInterface } from '@app/registration/models/api.model';
 
 @Component({
   selector: 'app-registration',
@@ -22,8 +24,9 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
   registrationForm!: FormGroup;
 
   @ViewChild('captchaCanvas', { static: false }) captchaCanvas!: ElementRef<HTMLCanvasElement>;
+  apiService: any;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.registrationForm = this.fb.group({
@@ -37,7 +40,7 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
     }, { validators: this.passwordMismatchValidator });
     this.generateCaptcha();
   }
-  
+
   ngAfterViewInit(): void {
     this.drawCaptcha();
   }
@@ -64,18 +67,36 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
     this.generateCaptcha();
     this.drawCaptcha();
   }
-
   register(): void {
     if (this.registrationData.captcha.toUpperCase() === this.registrationForm.get('captcha')?.value.toUpperCase()) {
-      console.log('Captcha matched. Proceed with registration.');
+      // Proceed with registration
+      // Prepare the data to be sent to the API
+      const user: LoginInterface = {
+        name: this.registrationData.name,
+        email: this.registrationData.email,
+        mobile: this.registrationData.mobile,
+        pan: this.registrationData.pan,
+        password: this.registrationData.password
+      };
+
+      // Call the API service to register the user
+      this.apiService.register(user).subscribe(
+        (response: ApiResponseInterface) => {
+          console.log('User registered successfully:', response);
+        },
+        (error: ApiErrorInterface) => {
+          console.error('Registration failed:', error);
+        }
+      );
     } else {
       console.log('Invalid captcha. Registration failed.');
     }
   }
 
+
   drawCaptcha(): void {
     const canvas = this.captchaCanvas?.nativeElement;
-    
+
     if (!canvas) {
       console.error('Canvas not found');
       return;
@@ -102,13 +123,13 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
   onlyNumbers(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
       const value = control.value;
-  
+
       if (!value) {
         return null; // If no value is entered, validation passes
       }
-  
+
       const valid = /^\d+$/.test(value); // Check if the value contains only numbers
-  
+
       return valid ? null : { 'onlyNumbers': true };
     };
   }
@@ -119,7 +140,7 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
       panControl.setValue(panControl.value.toUpperCase());
     }
   }
-  
+
   passwordMismatchValidator(control: AbstractControl): { [key: string]: boolean } | null {
     const password = control.get('password')?.value;
     const confirmPassword = control.get('confirmPassword')?.value;

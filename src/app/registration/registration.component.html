@@ -143,40 +143,7 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <!-- <div id="otpvalidation" class="card" *ngIf="showOtpValidation">
-                                <div class="card-body">
-                                    <h4>OTP VERIFICATION</h4>
-                                    <div>
-                                        <h6>OTP has been sent to your mobile number and E-Mail Id</h6>
-                                    </div>
-                                    <form [formGroup]="otpForm" (ngSubmit)="validateOtp()">
-                                        <div class="row" id="Div1">
-                                            <div class="form-group txtbox-padding">
-                                                <div class="col-md-12">
-                                                  <input type="text" 
-                                                  class="form-control" 
-                                                  placeholder="Enter Mobile/E-Mail OTP" 
-                                                  formControlName="mobileOtp" 
-                                                  maxlength="10" 
-                                                  autocomplete="off" required />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group txtbox-padding">
-                                            <div class="row">
-                                              <div class="col-md-3">
-                                                <button type="submit" 
-                                                class="btn btn-primary btn-sm" 
-                                                [disabled]="otpForm.invalid">VALIDATE OTP</button>
-                                              </div>
-                                            </div>
-                                            <div *ngIf="otpForm.get('mobileOtp')?.invalid && otpForm.get('mobileOtp')?.touched" style="color: red;">Invalid OTP</div>
-                                        </div>
-                                    </form>
-                                    <div *ngIf="otpValidationMessage">{{ otpValidationMessage }}</div>
-                                </div>
-                            </div> -->
+                            
                         </div>
                     </div>
                 </div>
