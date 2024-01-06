@@ -1,7 +1,7 @@
 import { Component, AfterViewInit, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl, ValidatorFn, AbstractControl } from '@angular/forms';
-import { RegistrationInterface } from './models/registration.model';
-import { LoginInterface } from './models/login.model';
+import { Login } from './models/login.model';
+import { ApiServiceService } from '../shared/services/api-service.service';
 
 @Component({
   selector: 'app-registration',
@@ -10,7 +10,7 @@ import { LoginInterface } from './models/login.model';
 })
 
 export class RegistrationComponent implements OnInit, AfterViewInit {
-  registrationData: RegistrationInterface = {
+  registrationData: Login = {
     name: '',
     email: '',
     mobile: '',
@@ -21,12 +21,11 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
   };
 
   registrationForm!: FormGroup;
-
-  @ViewChild('captchaCanvas', { static: false }) captchaCanvas!: ElementRef<HTMLCanvasElement>;
-  apiService: any;
   users: any;
 
-  constructor(private fb: FormBuilder) { }
+  @ViewChild('captchaCanvas', { static: false }) captchaCanvas!: ElementRef<HTMLCanvasElement>;
+
+  constructor(private fb: FormBuilder, private apiService: ApiServiceService) {} // Inject ApiServiceService
 
   ngOnInit(): void {
     this.registrationForm = this.fb.group({
@@ -74,25 +73,42 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
       console.error('Invalid response: Response is null or undefined.');
       return false;
     }
-  
-    const responseIsValid: boolean = (response as any).status === 'success';
-    if (responseIsValid) {
-      return true;
-    } else {
-      console.error('Invalid response: Custom validation condition not met.');
-      return false;
-    }
+    return true;
+    // const responseIsValid: boolean = (response as any).status === 'success';
+    // if (responseIsValid) {
+    //   return true;
+    // } else {
+    //   console.error('Invalid response: Custom validation condition not met.');
+    //   return false;
+    // }
   }
   
   register(): void {
+    console.log('Registration Form Data:', this.registrationForm.value);
+    console.log('Before Update - Registration Data:', this.registrationData);
+    debugger;
+  
     if (this.registrationData.captcha.toUpperCase() === this.registrationForm.get('captcha')?.value.toUpperCase()) {
-      const user: LoginInterface = {
+      // Update this.registrationData with form values
+      this.registrationData.name = this.registrationForm.get('name')?.value || '';
+      this.registrationData.email = this.registrationForm.get('email')?.value || '';
+      this.registrationData.mobile = this.registrationForm.get('mobile')?.value || '';
+      this.registrationData.pan = this.registrationForm.get('pan')?.value || '';
+      this.registrationData.password = this.registrationForm.get('password')?.value || '';
+      this.registrationData.confirmPassword = this.registrationForm.get('confirmPassword')?.value || '';
+  
+      // Create the user object
+      const user: Login = {
         name: this.registrationData.name,
         email: this.registrationData.email,
         mobile: this.registrationData.mobile,
         pan: this.registrationData.pan,
-        password: this.registrationData.password
+        password: this.registrationData.password,
+        confirmPassword: this.registrationData.confirmPassword,
+        captcha: this.registrationData.captcha
       };
+  
+      console.log('After Update - Registration Data:', this.registrationData);
   
       this.apiService.registerAndGenerateOtp(user).subscribe(
         (response: unknown) => {
@@ -115,8 +131,10 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
       console.log('Invalid captcha. Registration failed.');
     }
   }
+  
+  
 
-  drawCaptcha(): void {
+ drawCaptcha(): void {
     const canvas = this.captchaCanvas?.nativeElement;
 
     if (!canvas) {

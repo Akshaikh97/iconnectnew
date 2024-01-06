@@ -1,34 +1,36 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, catchError, throwError } from 'rxjs';
-import { LoginInterface } from '../../registration/models/login.model';
+import { HttpClient, HttpHandler } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { Login } from '../../registration/models/login.model';
 import { GenerateOtpInterface } from '../../registration/models/generate-otp.model';
 
 @Injectable({
   providedIn: 'root'
 })
+export class ApiServiceService  extends HttpClient {
+  private apiUrl = 'https://localhost:5001/api';
 
-export class ApiServiceService {
-  private apiUrl = 'https://localhost:5001/api/';
+  constructor(handler: HttpHandler) {
+    super(handler);
+  }
 
-  constructor(private http: HttpClient) {}
-
-  registerAndGenerateOtp(user: LoginInterface): Observable<GenerateOtpInterface> {
-    // Validate input
+  registerAndGenerateOtp(user: Login): Observable<GenerateOtpInterface> {
+    console.log('User in registerAndGenerateOtp:', user); 
+    debugger;
     if (!user || !user.id) {
-      // Handle validation error as per your application's requirements
-      console.error('Invalid user object');
-      return throwError('Invalid user object');
+      const errorMessage = 'Invalid user object';
+      console.error(errorMessage);
+      return throwError(errorMessage);
     }
-
     const userId = user.id;
 
-    return this.http.post<GenerateOtpInterface>(`${this.apiUrl}/Registration/GenerateOtp/${userId}`, {})
+    return this.post<GenerateOtpInterface>(`${this.apiUrl}/registration/generate-otp/${userId}`, {})
       .pipe(
         catchError((error) => {
-          // Handle HTTP errors here
-          console.error('HTTP error occurred:', error);
-          return throwError('Something went wrong');
+          const errorMessage = 'Error in API request';
+          console.error(errorMessage, error);
+          return throwError(errorMessage);
         })
       );
   }
