@@ -30,13 +30,13 @@
 //     rejectedDate?: Date;
 //     modifyDate?: Date;
 // }
-export interface Login {
+export class Login {
     id?: number;
-    name: string;
-    email: string;
-    mobile: string;
-    pan: string;
-    password: string;
-    confirmPassword: string;
-    captcha: string;
+    name: string = '';
+    email: string = '';
+    mobile: string = '';
+    pan: string = '';
+    password: string = '';
+    confirmPassword: string = '';
+    captcha: string = '';
 }

@@ -2,6 +2,7 @@ import { Component, AfterViewInit, ViewChild, ElementRef, OnInit } from '@angula
 import { FormBuilder, FormGroup, Validators, FormControl, ValidatorFn, AbstractControl } from '@angular/forms';
 import { Login } from './models/login.model';
 import { ApiServiceService } from '../shared/services/api-service.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-registration',
@@ -30,7 +31,7 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.registrationForm = this.fb.group({
       name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required],  Validators.email],
       mobile: ['', [Validators.required, Validators.maxLength(10), this.onlyNumbers()]],
       pan: ['', [Validators.required, Validators.pattern(/[A-Z]{5}\d{4}[A-Z]{1}/)]],
       password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(15)]],
@@ -111,20 +112,17 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
       console.log('After Update - Registration Data:', this.registrationData);
   
       this.apiService.registerAndGenerateOtp(user).subscribe(
-        (response: unknown) => {
-          if (this.isValidResponse(response)) {
-            console.log('User registered successfully:', response);
-            // Assign the response to 'users' if needed
-            this.users = response;
-          } else {
-            console.error('Invalid response:', response);
+        (response) => {
+          console.log('Registration successful:', response);
+        },
+        (error) => {
+          console.error('Error in API request:', error);
+          // Log the complete error response for further analysis
+          if (error instanceof HttpErrorResponse) {
+            console.error('Status:', error.status);
+            console.error('Headers:', error.headers);
+            console.error('Response:', error.error);
           }
-        },
-        (error: unknown) => {
-          console.error('Registration failed:', error);
-        },
-        () => {
-          console.log('Request has completed');
         }
       );
     } else {
