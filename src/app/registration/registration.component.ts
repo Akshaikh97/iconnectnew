@@ -23,6 +23,7 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
 
   registrationForm!: FormGroup;
   users: any;
+  formSubmitted = false;
 
   @ViewChild('captchaCanvas', { static: false }) captchaCanvas!: ElementRef<HTMLCanvasElement>;
 
@@ -31,7 +32,7 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.registrationForm = this.fb.group({
       name: ['', Validators.required],
-      email: ['', [Validators.required],  Validators.email],
+      email: ['', [Validators.required, Validators.email]],
       mobile: ['', [Validators.required, Validators.maxLength(10), this.onlyNumbers()]],
       pan: ['', [Validators.required, Validators.pattern(/[A-Z]{5}\d{4}[A-Z]{1}/)]],
       password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(15)]],
@@ -75,13 +76,6 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
       return false;
     }
     return true;
-    // const responseIsValid: boolean = (response as any).status === 'success';
-    // if (responseIsValid) {
-    //   return true;
-    // } else {
-    //   console.error('Invalid response: Custom validation condition not met.');
-    //   return false;
-    // }
   }
   
   register(): void {
@@ -122,15 +116,23 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
             console.error('Status:', error.status);
             console.error('Headers:', error.headers);
             console.error('Response:', error.error);
+        
+            // You might also want to handle specific error cases or show a user-friendly message
+            if (error.status === 400) {
+              console.log('Bad Request. Please check your form data.');
+            } else if (error.status === 401) {
+              console.log('Unauthorized. Please check your credentials.');
+            } else {
+              console.log('An unexpected error occurred. Please try again later.');
+            }
           }
         }
       );
     } else {
       console.log('Invalid captcha. Registration failed.');
     }
+    this.formSubmitted = true;
   }
-  
-  
 
  drawCaptcha(): void {
     const canvas = this.captchaCanvas?.nativeElement;
