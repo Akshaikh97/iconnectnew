@@ -1,6 +1,7 @@
 import { Component, AfterViewInit, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl, ValidatorFn, AbstractControl } from '@angular/forms';
 import { Login } from './models/login.model';
+import { GenerateOtp } from './models/generate-otp.model';
 import { ApiServiceService } from '../shared/services/api-service.service';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -20,10 +21,19 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
     confirmPassword: '',
     captcha: ''
   };
-
+  
+  generateOtpData: GenerateOtp = {
+    otp: undefined,
+  };
+  
   registrationForm!: FormGroup;
   users: any;
   formSubmitted = false;
+  showOtpSection = false;
+
+  otpForm: FormGroup = this.fb.group({
+    otp: ['', Validators.required],
+  });
 
   @ViewChild('captchaCanvas', { static: false }) captchaCanvas!: ElementRef<HTMLCanvasElement>;
 
@@ -91,7 +101,7 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
       this.registrationData.pan = this.registrationForm.get('pan')?.value || '';
       this.registrationData.password = this.registrationForm.get('password')?.value || '';
       this.registrationData.confirmPassword = this.registrationForm.get('confirmPassword')?.value || '';
-  
+
       // Create the user object
       const user: Login = {
         name: this.registrationData.name,
@@ -108,6 +118,7 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
       this.apiService.registerAndGenerateOtp(user).subscribe(
         (response) => {
           console.log('Registration successful:', response);
+          this.showOtpSection = true;
         },
         (error) => {
           console.error('Error in API request:', error);
@@ -187,4 +198,26 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
 
     return password === confirmPassword ? null : { 'passwordMismatch': true };
   }
+
+  validateOtp(): void {
+    if (this.otpForm.valid) {
+      const otp = this.otpForm.get('otp')?.value;
+  
+      this.apiService.verifyOtp(otp).subscribe(
+        (isOtpValid) => {
+          if (isOtpValid) {
+            console.log('OTP verification successful');
+          } else {
+            console.log('Invalid OTP');
+          }
+        },
+        (error) => {
+          console.error('Error in OTP verification:', error);
+        }
+      );
+    } else {
+    }
+  }
+  
+  
 }
