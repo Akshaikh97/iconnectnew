@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse, HttpHandler } from '@angular/common/http
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Login } from '../../registration/models/login.model';
-// import { GenerateOtpInterface } from '../../registration/models/generate-otp.model';
+import { GenerateOtp } from '../../registration/models/generate-otp.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,18 +14,24 @@ export class ApiServiceService extends HttpClient {
   constructor(handler: HttpHandler) {
     super(handler);
   }
+
   registerAndGenerateOtp(user: Login): Observable<Login> {
     return this.post<Login>(`${this.apiUrl}/registration/generate-otp`, user)
       .pipe(
         catchError((error) => this.handleError(error))
       );
   }
-  verifyOtp(otp: number): Observable<any> {
-    return this.post<any>(`${this.apiUrl}/registration/verify-otp`, { Otp: otp })
+
+  verifyOtp(generateOtpData: GenerateOtp): Observable<GenerateOtp> {
+    return this.post<GenerateOtp>(`${this.apiUrl}/registration/verify-otp`, generateOtpData)
       .pipe(
-        catchError((error) => this.handleError(error))
+        catchError((error) => {
+          console.error('Error in OTP verification:', error);
+          return throwError('Error in OTP verification');
+        })
       );
   }
+
   private handleError(error: HttpErrorResponse) {
     console.error('Error in API request:', error);
 

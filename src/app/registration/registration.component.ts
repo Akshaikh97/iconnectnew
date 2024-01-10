@@ -21,11 +21,11 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
     confirmPassword: '',
     captcha: ''
   };
-  
+
   generateOtpData: GenerateOtp = {
     otp: undefined,
   };
-  
+
   registrationForm!: FormGroup;
   users: any;
   formSubmitted = false;
@@ -37,7 +37,7 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
 
   @ViewChild('captchaCanvas', { static: false }) captchaCanvas!: ElementRef<HTMLCanvasElement>;
 
-  constructor(private fb: FormBuilder, private apiService: ApiServiceService) {} // Inject ApiServiceService
+  constructor(private fb: FormBuilder, private apiService: ApiServiceService) { } // Inject ApiServiceService
 
   ngOnInit(): void {
     this.registrationForm = this.fb.group({
@@ -50,6 +50,10 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
       captcha: ['', Validators.required],
     }, { validators: this.passwordMismatchValidator });
     this.generateCaptcha();
+
+    this.otpForm = this.fb.group({
+      otp: ['', Validators.required],
+    });
   }
 
   ngAfterViewInit(): void {
@@ -78,7 +82,7 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
     this.generateCaptcha();
     this.drawCaptcha();
   }
-  
+
   private isValidResponse(response: unknown): boolean {
     // Check if the response is not null or undefined
     if (response === null || response === undefined) {
@@ -87,12 +91,12 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
     }
     return true;
   }
-  
+
   register(): void {
     console.log('Registration Form Data:', this.registrationForm.value);
     console.log('Before Update - Registration Data:', this.registrationData);
     debugger;
-  
+
     if (this.registrationData.captcha.toUpperCase() === this.registrationForm.get('captcha')?.value.toUpperCase()) {
       // Update this.registrationData with form values
       this.registrationData.name = this.registrationForm.get('name')?.value || '';
@@ -112,9 +116,9 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
         confirmPassword: this.registrationData.confirmPassword,
         captcha: this.registrationData.captcha
       };
-  
+
       console.log('After Update - Registration Data:', this.registrationData);
-  
+
       this.apiService.registerAndGenerateOtp(user).subscribe(
         (response) => {
           console.log('Registration successful:', response);
@@ -127,7 +131,7 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
             console.error('Status:', error.status);
             console.error('Headers:', error.headers);
             console.error('Response:', error.error);
-        
+
             // You might also want to handle specific error cases or show a user-friendly message
             if (error.status === 400) {
               console.log('Bad Request. Please check your form data.');
@@ -145,7 +149,7 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
     this.formSubmitted = true;
   }
 
- drawCaptcha(): void {
+  drawCaptcha(): void {
     const canvas = this.captchaCanvas?.nativeElement;
 
     if (!canvas) {
@@ -199,25 +203,25 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
     return password === confirmPassword ? null : { 'passwordMismatch': true };
   }
 
-  validateOtp(): void {
-    if (this.otpForm.valid) {
-      const otp = this.otpForm.get('otp')?.value;
-  
-      this.apiService.verifyOtp(otp).subscribe(
-        (isOtpValid) => {
-          if (isOtpValid) {
-            console.log('OTP verification successful');
-          } else {
-            console.log('Invalid OTP');
-          }
-        },
-        (error) => {
-          console.error('Error in OTP verification:', error);
-        }
-      );
-    } else {
-    }
-  }
-  
-  
+  // validateOtp(): void {
+  //   debugger;
+  //   const generateOtpData: GenerateOtp = {
+  //     otp: this.otpForm.get('otp')?.value
+  //   };
+
+  //   console.log(generateOtpData.otp);
+
+  //   this.apiService.verifyOtp(generateOtpData).subscribe(
+  //     (isOtpValid) => {
+  //       if (isOtpValid) {
+  //         console.log('OTP verification successful');
+  //       } else {
+  //         console.log('Invalid OTP');
+  //       }
+  //     },
+  //     (error) => {
+  //       console.error('Error in OTP verification:', error);
+  //     }
+  //   );
+  // }
 }

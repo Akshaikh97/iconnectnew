@@ -19,6 +19,8 @@ import { AddCompanyComponent } from './add-company/add-company.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
+import { OtpComponent } from './registration/otp.component';
+import { DocComponent } from './registration/doc.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import { RegistrationComponent } from './registration/registration.component';
     AddCompanyComponent,
     DashboardComponent,
     LoginComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    OtpComponent,
+    DocComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,83 @@
+<body class="reg-form">
+    <div class="container">
+        <form [formGroup]="docForm">
+            <div class="form-horizontal">
+                <div class="row">
+                    <div class="col-lg-7">
+                        <div class="col-lg-12">
+                            <img src="assets/uploaddoc.svg" style="padding-top: 90px; width: 85%;" />
+                        </div>
+                    </div>
+
+                    <div class="col-lg-5">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4>UPLOAD DOCUMENTS</h4>
+                                <div class="row">
+                                    <div class="form-group txtbox-padding">
+                                        <div class="col-md-12">
+                                            <div class="yes">
+                                                <div class="col-lg-5">
+                                                    <span class="btn_upload btn btn-primary-sm btn-block"
+                                                        style="width: 100%;">
+                                                        <input type="file" id="imagpan" title="" class="input-img" />
+                                                        Upload Pan
+                                                    </span>
+                                                </div>
+                                                <div class="col-lg-7">
+                                                    <img id="ImgPreview" src="" class="preview1 responsive" />
+                                                    <input type="button" id="removeImage1" value="x" class="btn-rmv1" />
+                                                </div>
+                                            </div>
+                                            <hr />
+                                            <div class="yes">
+                                                <div class="col-lg-5">
+                                                    <span class="btn_upload btn btn-primary-sm btn-block"
+                                                        style="width: 100%;">
+                                                        <input type="file" id="imagphoto" title="" class="input-img"
+                                                            runat="server" />
+                                                        Upload Photo
+                                                    </span>
+                                                </div>
+                                                <div class="col-lg-7">
+                                                    <img id="ImgPreview2" src="" class="preview2 responsive" />
+                                                    <input type="button" id="removeImage2" value="x" class="btn-rmv2" />
+                                                </div>
+                                            </div>
+                                            <hr />
+                                            <div class="yes">
+                                                <div class="col-lg-5">
+                                                    <span class="btn_upload btn btn-primary-sm btn-block"
+                                                        style="width: 100%;">
+                                                        <input type="file" id="imagsign" title="" class="input-img"
+                                                            runat="server" />
+                                                        Upload Signature
+                                                    </span>
+                                                </div>
+                                                <div class="col-lg-7">
+                                                    <img id="ImgPreview3" src="" class="preview3 responsive" />
+                                                    <input type="button" id="removeImage3" value="x" class="btn-rmv3" />
+                                                </div>
+                                            </div>
+                                            <hr />
+                                        </div>
+                                    </div>
+                                    <div class="form-group txtbox-padding">
+                                        <div class="row">
+                                            <div class="col-md-9">
+                                                <!-- <asp:Label runat="server" ID="lblError" Text="" ForeColor="red" /> -->
+                                            </div>
+                                            <div class="col-md-3">
+                                                <!-- <asp:Button runat="server" ID="btnDocUpload" OnClientClick="return verifyimage()" Text="UPLOAD" CssClass="btn btn-primary btn-sm" OnClick="btnDocUpload_Click" /> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
