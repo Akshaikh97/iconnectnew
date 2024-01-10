@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { GenerateOtp } from './models/generate-otp.model';
 import { ApiServiceService } from '../shared/services/api-service.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -10,9 +10,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class OtpComponent {
   @Input() showOtpSection: boolean = false;
+  @Output() docFormSubmitted = new EventEmitter<boolean>();
   otpForm: FormGroup;
+  formSubmitted = false;
 
-  constructor(private fb: FormBuilder,  private apiService: ApiServiceService) {
+  constructor(private fb: FormBuilder, private apiService: ApiServiceService) {
     this.otpForm = this.fb.group({
       otp: ['', Validators.required],
     });
@@ -23,13 +25,15 @@ export class OtpComponent {
     const generateOtpData: GenerateOtp = {
       otp: this.otpForm.get('otp')?.value
     };
-
     console.log(generateOtpData.otp);
 
     this.apiService.verifyOtp(generateOtpData).subscribe(
       (isOtpValid) => {
         if (isOtpValid) {
           console.log('OTP verification successful');
+          this.formSubmitted = true;
+          // Emit an event to notify the parent component that docForm should be displayed
+          this.docFormSubmitted.emit(true);
         } else {
           console.log('Invalid OTP');
         }
@@ -38,5 +42,6 @@ export class OtpComponent {
         console.error('Error in OTP verification:', error);
       }
     );
+    this.formSubmitted = true;
   }
 }

@@ -4,29 +4,13 @@ export class KycDoc {
     pan: string = "";
     docPathPan?: string;
     docPanType?: string;
-    docPan?: any; // Replace 'any' with the appropriate type for your file upload
+    docPan?: any; 
     docPathPhoto?: string;
     docPhotoType?: string;
-    docPhoto?: any; // Replace 'any' with the appropriate type for your file upload
+    docPhoto?: any; 
     docPathSign?: string;
     docSignType?: string;
-    docSign?: any; // Replace 'any' with the appropriate type for your file upload
-    uploadDate?: Date;
-    modifyDate?: Date;
-}
-export interface KycDoc {
-    kycId?: number;
-    regId?: number;
-    pan: string;
-    docPathPan?: string;
-    docPanType?: string;
-    docPan?: any; // Replace 'any' with the appropriate type for your file upload
-    docPathPhoto?: string;
-    docPhotoType?: string;
-    docPhoto?: any; // Replace 'any' with the appropriate type for your file upload
-    docPathSign?: string;
-    docSignType?: string;
-    docSign?: any; // Replace 'any' with the appropriate type for your file upload
+    docSign?: any; 
     uploadDate?: Date;
     modifyDate?: Date;
 }

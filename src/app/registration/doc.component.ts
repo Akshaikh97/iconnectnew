@@ -9,8 +9,15 @@ import { ApiServiceService } from '../shared/services/api-service.service';
 })
 export class DocComponent {
   docForm: FormGroup;
+  panImage: any;
 
   constructor(private fb: FormBuilder,  private apiService: ApiServiceService){
     this.docForm = this.fb.group({});
+  }
+
+  handlePanImage(event: any): void {
+    const file = event.target.files[0];
+    this.panImage = file;
+    // Perform any additional logic if needed
   }
 }

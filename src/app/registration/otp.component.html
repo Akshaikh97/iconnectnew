@@ -1,19 +1,18 @@
 <body class="reg-form">
     <div class="container">
-        <form [formGroup]="otpForm">
+        <form [formGroup]="otpForm" *ngIf="!formSubmitted">
             <div class="form-horizontal">
                 <div class="row">
                     <div class="col-lg-7">
-                        <div class="col-lg-12" *ngIf="showOtpSection">
+                        <div class="col-lg-12">
                             <img src="assets/otpverify.svg" alt="Registration" style="padding-top: 90px; width: 85%;" />
                         </div>
                     </div>
                     
                     <div class="col-lg-5">
-                        <div class="card" *ngIf="showOtpSection">
+                        <div class="card">
                             <div class="card-body">
                                 <h4>OTP VERIFICATION</h4>
-                                <!-- Your OTP form HTML goes here -->
                                 <div class="row">
                                     <div class="form-group txtbox-padding">
                                         <div class="col-md-12">
@@ -37,7 +36,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- End of OTP form HTML -->
                             </div>
                         </div>
                     </div>
@@ -45,5 +43,6 @@
 
             </div>
         </form>
+        <app-doc *ngIf="formSubmitted"></app-doc>
     </div>
 </body>
